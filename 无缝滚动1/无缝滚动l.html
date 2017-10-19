@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>无缝滚动</title>
+		<script src="js/jquery.min.js"></script>
+		<!--<script src="../js/jquery.min.js"></script>-->
+		<script src="js/jquery.easyui.min.js"></script>
+		<script src="js/jquery.datebox.js"></script>
+		<script src="js/DateFormat.js"></script>
+		<!--<script src="../js/HTTP.js"></script>-->
+		<style>
+			* {
+				margin: 0;
+				padding: 0;				
+			}
+			
+			#myDiv {
+				width: 600px;
+				height: 100px;
+				margin: 100px auto;
+				position: relative;				
+				overflow: hidden;				
+			}
+			
+			#myDiv ol {
+				position: relative;
+				left: 0;
+				top: 0;
+			}
+			
+			#myDiv ol li {
+				float: left;
+				list-style: none;
+				
+			}
+			
+			#myDiv ol li img {
+				width: 150px;
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<button>向左走</button>
+		<button>向右走</button>
+		<div id="myDiv">
+			<ol>
+				<li>
+					<img src="img/1.jpg"/></li>
+				<li>
+					<img src="img/2.jpg"/></li>
+				<li>
+					<img src="img/3.jpg"/></li>
+				<li>
+					<img src="img/4.jpg"/></li>
+					<!--<li>
+					<img src="../../img/4.jpg"/></li>-->
+			</ol>
+		</div>
+		<script>
+			$(function() {
+				var timer=null;
+				var speed=null;
+				var div = document.getElementById("myDiv");
+				var ol = div.getElementsByTagName("ol")[0];
+				var li = ol.getElementsByTagName("li");
+				ol.innerHTML=ol.innerHTML+ol.innerHTML;
+				ol.style.width=li[0].offsetWidth*li.length+"px";
+				 function move() {
+					if(ol.offsetLeft < -ol.offsetWidth / 2) {
+						ol.style.left = "0";
+					}
+					if(ol.offsetLeft>0)
+					{
+						ol.style.left=-ol.offsetWidth/2+"px";
+					}
+					ol.style.left = ol.offsetLeft + speed + "px";
+
+				}
+				
+			    var timer=setInterval(move, 50);
+				div.onmouseover=function(){
+					clearInterval(timer);
+				}
+				div.onmouseout=function(){
+					timer=setInterval(move, 50);
+				}
+				document.getElementsByTagName("button")[0].onclick=function(){
+					speed=-2;
+				}
+				document.getElementsByTagName("button")[1].onclick=function(){
+					speed=2;
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

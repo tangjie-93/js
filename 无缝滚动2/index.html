@@ -147,6 +147,25 @@
 			        }
 
 			    });
+				function move() {
+					if(ol.offsetLeft < -ol.offsetWidth / 2) {
+						ol.style.left = "0";
+					}
+					if(ol.offsetLeft>0)
+					{
+						ol.style.left=-ol.offsetWidth/2+"px";
+					}
+					ol.style.left = ol.offsetLeft + speed + "px";
+
+				}
+				
+			    var timer=setInterval(move, 50);
+				$v_show.onmouseover=function(){
+					clearInterval(timer);
+				}
+				$v_show.onmouseout=function(){
+					timer=setInterval(move, 50);
+				}
 			    //$("span").mouseenter(function() {
 			    //    var index = $(this).index();
 			    //    if (!$("ol").is(":animated")) {
