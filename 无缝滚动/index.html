@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>视频展示效果</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easyui.min.js"></script>
+    <script src="js/easyui-lang-zh_CN.js"></script>
+	<link rel="stylesheet" href="index.css">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <div class="v_show">
+        <div class="v_caption">
+            <h2 class="cartoon" title="卡通动漫">卡通动漫</h2>
+            <div class="highlight">
+                <span class="current">1</span><span>2</span><span>3</span><span>4</span>
+                <!--<span class="current"></span><span></span><span></span><span></span>-->
+            </div>
+            <div class="change_btn">
+                <button class="prev">上一页</button>
+                <button class="next">下一页</button>
+            </div>
+            <em><a href="#" class="more" onclick="window.open('http://image.baidu.com/')">更多>></a></em>
+        </div>
+
+        <div class="v_content_list">
+            <ol id="ol">
+                <li>
+                    <img src="img/1.jpg" alt="晨曦" />
+                    <!--</li>-->
+                    <h4><a href="#"></a>晨曦</h4><span>播放量：<em>28.276</em></span>
+                </li>
+                <li>
+                    <img src="img/2.jpg" alt="田野" />
+                    <h4><a href="#"></a>田野</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/3.jpg" alt="秋意" />
+                    <h4><a href="#"></a>秋意</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/4.jpg" alt="盛夏" />
+                    <h4><a href="#"></a>盛夏</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/5.jpg" alt="寒冬" />
+                    <h4><a href="#"></a>寒冬</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/5.jpg" alt="晨曦" />
+                    <h4><a href="#"></a>晨曦</h4><span>播放量：<em>28.276</em></span>
+                </li>
+                <li>
+                    <img src="img/4.jpg" alt="田野" />
+                    <h4><a href="#"></a>田野</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/3.jpg" alt="秋意" />
+                    <h4><a href="#"></a>秋意</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <li>
+                    <img src="img/1.jpg" alt="寒冬" />
+                    <h4><a href="#"></a>寒冬</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/3.jpg" alt="秋意" />
+                    <h4><a href="#"></a>秋意</h4><span>播放量：<em>29.276</em></span>
+                </li>
+              
+                <li>
+                    <img src="img/2.jpg" alt="盛夏" />
+                    <h4><a href="#"></a>盛夏</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/1.jpg" alt="寒冬" />
+                    <h4><a href="#"></a>寒冬</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+                <li>
+                    <img src="img/2.jpg" alt="盛夏" />
+                    <h4><a href="#"></a>盛夏</h4><span>播放量：<em>29.276</em></span>
+                </li>
+                <!--</li>-->
+            </ol>
+        </div>
+    </div>
+
+    <script>
+			$(function() {
+				var page = 1,
+					i = 4;
+
+				var $v_show = $("div.v_content_list");
+				var v_width = $v_show.width();
+				var len = $v_show.find("li").length;
+				var page_count = Math.ceil(len / i);
+				var ol = $("ol")[0];
+				var li = $("li")[0];
+				ol.style.width = li.offsetWidth * len + "px";
+			    $("button.next").click(function() {
+
+			        if (!$("ol").is(":animated")) {
+			            if (page == page_count) {
+			                $("ol").animate({
+			                    "left": 0 + "px"
+			                }, 1000);
+
+			                page = 1;
+			            } else {
+			                $("ol").animate({
+			                    "left": "-=" + v_width
+			                }, 1000);
+
+			                page++;
+			            }
+			            $("span").eq((page - 1)).addClass("current").siblings().removeClass("current");
+			        }
+
+			    });
+			    $("button.prev").click(function() {
+			        if (!$("ol").is(":animated")) {
+			            if (page === 1) {
+			                $("ol").animate({
+			                    "left": "-=" + v_width * (page_count - 1)
+			                }, 1000);
+			                page = page_count;
+
+			            } else {
+			                $("ol").animate({
+			                    "left": "+=" + v_width
+			                }, 1000);
+			                page--;
+
+			            }
+			            $("span").eq((page - 1)).addClass("current").siblings().removeClass("current");
+			        }
+
+			    });
+			    //$("span").mouseenter(function() {
+			    //    var index = $(this).index();
+			    //    if (!$("ol").is(":animated")) {
+			    //        $("ol").animate({
+			    //            "left": -v_width * index
+			    //        }, 1000);
+			    //        $("span").eq(index).addClass("current").siblings().removeClass("current");
+			    //    }
+
+
+			    //});
+			});
+    </script>
+</body>
+</html>
