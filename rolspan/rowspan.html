@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<script src="jquery.min.js"></script>
+		<title></title>
+		<style type="text/css">
+			
+			table {
+				font-family: verdana, arial, sans-serif;
+				color: #333333;
+				border-width: 1px;
+				border-color: #666666;
+				border-collapse: collapse;
+				margin: 0 auto;
+				text-align: center;
+				table-layout: fixed;
+			}
+			
+			th {
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #dedede;
+			}
+			
+			td {
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #ffffff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>姓名</th>
+						<th>年龄</th>
+						<th>身高</th>
+						<th>体重</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+        </div>
+	</body>
+
+	<script type="text/javascript">
+		$(function() {
+			var data = [
+				{ "name": "张三", "age": 23, "height": 175, "weight": 70, "operate": "查看" },
+				{ "name": "张三", "age": 33, "height": 165, "weight": 65, "operate": "查看" },
+				{ "name": "张三", "age": 27, "height": 185, "weight": 75, "operate": "查看" },
+				{ "name": "张三", "age": 43, "height": 180, "weight": 80, "operate": "查看" },
+				{ "name": "李四", "age": 24, "height": 164, "weight": 62, "operate": "查看" },
+				{ "name": "李四", "age": 25, "height": 167, "weight": 63, "operate": "查看" },
+				{ "name": "李四", "age": 26, "height": 169, "weight": 66, "operate": "查看" },
+				{ "name": "李四", "age": 27, "height": 161, "weight": 60, "operate": "查看" },
+				{ "name": "王五", "age": 23, "height": 165, "weight": 62, "operate": "查看" },
+				{ "name": "王五", "age": 23, "height": 160, "weight": 60, "operate": "查看" },
+				{ "name": "王五", "age": 23, "height": 172, "weight": 67, "operate": "查看" },
+				{ "name": "王五", "age": 23, "height": 178, "weight": 75, "operate": "查看" },
+				{ "name": "陈六", "age": 24, "height": 190, "weight": 90, "operate": "查看" },
+				{ "name": "陈六", "age": 25, "height": 175, "weight": 75, "operate": "查看" },
+				{ "name": "陈六", "age": 26, "height": 187, "weight": 85, "operate": "查看" },
+				{ "name": "陈六", "age": 27, "height": 192, "weight": 95, "operate": "查看" }
+			];
+			var obj = {}; //用于统计不同name的个数
+			//将数据添加到表单
+			for(var i = 0; i < data.length; i++) {
+				if(!obj[data[i].name]) {
+					obj[data[i].name] = 1;
+				} else {
+					obj[data[i].name]++;
+				}
+				var $tr = $("<tr/>");
+				$("<td/>").text(data[i].name).attr("rowspan", 1).appendTo($tr);
+				$("<td/>").text(data[i].age ? data[i].age : "--").appendTo($tr);
+				$("<td/>").text(data[i].height ? data[i].height : "--").appendTo($tr);
+				$("<td/>").text(data[i].weight ? data[i].weight : "--").appendTo($tr);
+				$("<td/>").text(data[i].operate ? data[i].operate : "--").addClass("operate").appendTo($tr);
+				$(".operate").off("click").on("click", function() {
+					alert("测试")
+				})
+				$("table>tbody").append($tr);
+			}
+			//合并单元行
+			var trArr = $("table>tbody>tr");
+			var objs = {};
+			for(var j = 0; j < trArr.length; j++) {
+				for(var item in obj) {
+					if($($(trArr[j]).children()[0]).text() === item) {
+						if(!objs[item]) {
+							$($(trArr[j]).children()[0]).attr('rowspan', obj[item]);
+							$($(trArr[j]).children()[$(trArr[j]).children().length - 1]).attr('rowspan', obj[item]);
+							var i = 0
+							while(i < obj[item] - 1) {
+								$($(trArr[j + 1]).children()[0]).hide();
+								$($(trArr[j + 1]).children()[$(trArr[j]).children().length - 1]).hide();
+								j++;
+								i++;
+							}
+							objs[item] = 1;
+						}
+
+					}
+				}
+			}
+		})
+	</script>
+
+</html>
